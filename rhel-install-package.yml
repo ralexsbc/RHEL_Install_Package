@@ -1,0 +1,33 @@
+---
+#####################################################################################################
+#
+# rhel-install-package.yml - Playbook desenvolvido para efeutar a instalação de programas no Red Hat
+# ---------------------------------------------------------------------------------------------------
+# Autor: Renato Alexandre da Rocha
+# Email: ralex.sbc@hotmail.com
+# ---------------------------------------------------------------------------------------------------
+# Histórico:
+#       v1.0, Renato Alexandre da Rocha
+#       05/Jan/2022 - Playbook desenvolvido
+# ---------------------------------------------------------------------------------------------------
+# Funcionalidade: 
+#       - Ao executar o playbook será solicitado ao usuário informar qual programa deseja instalar e
+#       a instalação será efetuada em todos os servidores
+#
+#####################################################################################################
+
+  - name: Instalar pacotes no Red Hat
+    hosts: ALL-HOSTS
+    become: yes
+    become_user: root
+
+    vars_prompt:
+      - name: _pacote
+        prompt: Informe o nome do pacote que será instalado?
+        private: no
+
+    tasks:
+      - name: Instalação da ultima versão de pacote no Red Hat
+        yum:
+          name: "{{ _pacote }}"
+          state: latest
